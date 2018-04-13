@@ -1,0 +1,3 @@
+    yum install libX11-devel libXpm-devel libXft-devel libXext-devel mesa-libGL-devel glew-devel  // root
+    
+    libtool 
