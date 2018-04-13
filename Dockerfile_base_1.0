@@ -1,4 +1,3 @@
 FROM centos:7.2.1511
 RUN yum install -y tcsh epel-release \
-    && yum install -y gcc-c++ gcc-gfortran scons cmake make yumex wget subversion git file tighervnc tighervnc-server fluxbox xterm
-    && libX11-devel libXpm-devel libXft-devel libXext-devel
+    && yum install -y gcc-c++ gcc-gfortran scons cmake make autoconf automake yumex wget bzip2 subversion git file tighervnc tighervnc-server fluxbox xterm
