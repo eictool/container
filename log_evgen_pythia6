@@ -3,8 +3,8 @@
 
 == build condition =======================================================================================
 based on eictool/base:1.0
-
 install pythia6 manually by following https://jlabsvn.jlab.org/svnroot/eic/evgen/pythiaeRHIC/1.0.0/readme_jlab
+Then push to docker cloud at https://store.docker.com/community/images/eictool/evgen_pythia6
 
 == how to use, step by step guide  =======================================================================================
 cd your_work_dir
