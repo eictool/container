@@ -1,0 +1,11 @@
+== log =======================================================================================
+2018/04/14 a copy from /w/halla-scifs17exp/sbs/camsonne/vgg/dvcs4, by Zhiwen Zhao
+
+== build condition =======================================================================================
+based on eictool/base:1.0
+
+mkdir -p /evgen/vgg
+cp /w/halla-scifs17exp/sbs/camsonne/vgg/dvcs4 /evgen/vgg/
+
+Then push to docker cloud at https://store.docker.com/community/images/eictool/evgen_vgg
+
