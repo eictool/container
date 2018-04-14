@@ -54,7 +54,6 @@ eictool/base              1.0                 d373313f5ccb        5 hours ago   
 REPOSITORY                TAG                 IMAGE ID            CREATED              SIZE
 eictool/evgen_pythia6     latest              4c5a68424c84        About a minute ago   1.93GB
 eictool/base              1.0                 d373313f5ccb        5 hours ago          632MB
-[zwzhao@lily ~]$ sudo docker login
-[zwzhao@lily ~]$ sudo docker login
+[zwzhao@lily ~]$ sudo docker login                        (one need to do this once on your computer)
 [zwzhao@lily ~]$ sudo docker push eictool/evgen_pythia6
 
