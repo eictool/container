@@ -1,3 +1,60 @@
-    yum install libX11-devel libXpm-devel libXft-devel libXext-devel mesa-libGL-devel glew-devel  // root
-    
-    libtool 
+== log =======================================================================================
+2018/04/13 at SVN r529 pythiaeRHIC, by Zhiwen Zhao
+
+== build condition =======================================================================================
+based on eictool/base:1.0
+
+install pythia6 manually by following https://jlabsvn.jlab.org/svnroot/eic/evgen/pythiaeRHIC/1.0.0/readme_jlab
+
+== how to use, step by step guide  =======================================================================================
+cd your_work_dir
+
+load container with docker by
+sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $PWD:$PWD --ipc=host eictool/evgen_pythia6
+
+load container with x11docker by
+x11docker --desktop --sharedir $PWD eictool/evgen_pythia6 fluxbox 
+right click on the fluxbox desktop and open xterm 
+
+load container with singularity by
+sudo singularity pull docker://eictool/evgen_pythia6
+mv evgen_pythia6.simg eictool-evgen_pythia6-latest-s2.4.4.simg
+singularity shell --bind ${PWD}:${PWD} eictool-evgen_pythia6-latest-s2.4.4.simg
+
+.....run it inside container .............................
+tcsh
+setenv eic_evgen /evgen
+setenv rootVERSION v5.34.36
+setenv eicsmearVERSION 1.0.3
+source $evgen/root_$rootVERSION/bin/thisroot.csh
+setenv LD_LIBRARY_PATH $evgen/pythia6:$evgen/eic-smear-$eicsmearVERSION/build:${LD_LIBRARY_PATH}
+cd your_work_dir
+cp $eic_evgen/pythiaeRHIC/1.0.0/input_JLEIC ./
+$eic_evgen/pythiaeRHIC/1.0.0/build/pythiaeRHIC < input_JLEIC > pythia.log
+cp $eic_evgen/pythiaeRHIC/1.0.0/lund2root.C ./
+root 'lund2root.C+("pythia.lund",100)'
+....................................................................
+
+== how to build, step by step guide =============================
+[zwzhao@lily ~]$ sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ${PWD}:/home --ipc=host eictool/base:1.0
+[root@e759823744ad /]# tcsh
+[root@e759823744ad /]# yum install -y libX11-devel libXpm-devel libXft-devel libXext-devel mesa-libGL-devel glew-devel   (required package by root)
+[root@e759823744ad /]# yum install -y libtool                           (required package by pythiaeRHIC)
+[root@e759823744ad /]# (install pythia6 by following https://jlabsvn.jlab.org/svnroot/eic/evgen/pythiaeRHIC/1.0.0/readme_jlab)
+[root@e759823744ad /]# exit
+[root@e759823744ad /]# exit
+[zwzhao@lily ~]$ sudo docker commit e759823744ad 
+sha256:4c5a68424c842aa2d70dc674e04b0dd8d1ba37b2f68ec3300bfd49180034cc8e
+[zwzhao@lily ~]$ sudo docker image ls
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+<none>                    <none>              4c5a68424c84        4 seconds ago       1.93GB
+eictool/base              1.0                 d373313f5ccb        5 hours ago         632MB
+[zwzhao@lily ~]$ sudo docker tag 4c5a68424c84 eictool/evgen_pythia6
+[zwzhao@lily ~]$ sudo docker image ls
+REPOSITORY                TAG                 IMAGE ID            CREATED              SIZE
+eictool/evgen_pythia6     latest              4c5a68424c84        About a minute ago   1.93GB
+eictool/base              1.0                 d373313f5ccb        5 hours ago          632MB
+[zwzhao@lily ~]$ sudo docker login
+[zwzhao@lily ~]$ sudo docker login
+[zwzhao@lily ~]$ sudo docker push eictool/evgen_pythia6
+
