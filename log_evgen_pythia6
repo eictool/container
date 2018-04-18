@@ -10,7 +10,7 @@ Then push to docker cloud at https://store.docker.com/community/images/eictool/e
 cd your_work_dir
 
 load container with docker by
-sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $PWD:$PWD --ipc=host eictool/evgen_pythia6
+sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ${PWD}:$PWD --ipc=host eictool/evgen_pythia6
 
 load container with x11docker by
 x11docker --desktop --sharedir $PWD eictool/evgen_pythia6 fluxbox 
@@ -36,7 +36,7 @@ root 'lund2root.C+("pythia.lund",100)'
 ....................................................................
 
 == how to build, step by step guide =============================
-[zwzhao@lily ~]$ sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ${PWD}:/home --ipc=host eictool/base:1.0
+[zwzhao@lily ~]$ sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ${PWD}:$PWD --ipc=host eictool/base:1.0
 [root@e759823744ad /]# tcsh
 [root@e759823744ad /]# yum install -y libX11-devel libXpm-devel libXft-devel libXext-devel mesa-libGL-devel glew-devel   (required package by root)
 [root@e759823744ad /]# yum install -y libtool                           (required package by pythiaeRHIC)
