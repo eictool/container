@@ -1,0 +1,32 @@
+== build condition =======================================================================================
+based on eictool/base:1.0
+refer to https://github.com/eictool/container/blob/master/Dockerfile_base_1.0
+
+#for root, refer to https://root.cern.ch/build-prerequisites#fedora
+yum install -y git cmake gcc-c++ gcc binutils libX11-devel libXpm-devel libXft-devel libXext-devel
+yum install -y gcc-gfortran openssl-devel pcre-devel mesa-libGL-devel mesa-libGLU-devel glew-devel ftgl-devel mysql-devel fftw-devel cfitsio-devel graphviz-devel avahi-compat-libdns_sd-devel libldap-dev python-devel libxml2-devel gsl-static
+
+#for mysql
+yum install -y mariadb mariadb-devel mariadb-libs
+
+#for qt5
+yum install -y qt5-qtbase qt5-qtbase-devel qt5-qtwebkit qt5-qtwebkit-devel qt5-qtx11extras qt5-qtbase-mysql
+
+yum install -y cmake3 xorg-x11-fonts-Type1 mesa-dri-drivers xkeyboard-config 
+yum install -y libXt-devel libXmu-devel libXrender-devel expat-devel libAfterImage libAfterImage-devel libXi    
+yum install -y perl-DBD-MySQL
+rpm -i http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el6/en/x86_64/rpmforge/RPMS/perl-Math-MatrixReal-2.05-1.el6.rf.noarch.rpm 
+rpm -i http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el6/en/x86_64/rpmforge/RPMS/perl-Math-VectorReal-1.02-1.2.el6.rf.x86_64.rpm 
+
+ln -s /usr/bin/cmake3 /usr/local/bin/cmake
+tcsh
+mkdir /jlab_root
+setenv JLAB_ROOT /jlab_root
+cd $JLAB_ROOT
+setenv JLAB_VERSION 2.2
+wget http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz
+tar -zxpvf ceInstall_$JLAB_VERSION.tar.gz
+mv ceInstall-$JLAB_VERSION $JLAB_VERSION
+
+install pythia6 manually by following https://jlabsvn.jlab.org/svnroot/eic/evgen/pythiaeRHIC/1.0.0/readme_jlab
+Then push to docker cloud at https://store.docker.com/community/images/eictool/evgen_pythia6
