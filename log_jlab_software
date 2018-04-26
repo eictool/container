@@ -10,29 +10,48 @@ yum install -y gcc-gfortran openssl-devel pcre-devel mesa-libGL-devel mesa-libGL
 yum install -y mariadb mariadb-devel mariadb-libs
 
 #for qt5
-yum install -y qt5-qtbase qt5-qtbase-devel qt5-qtwebkit qt5-qtwebkit-devel qt5-qtx11extras qt5-qtbase-mysql
+yum install -y 'qt5-*'
 
+#install cmake3
 yum install -y cmake3 
+ln -s /usr/bin/cmake3 /usr/local/bin/cmake
+
+#install others
 yum install -y xorg-x11-fonts-Type1 mesa-dri-drivers xkeyboard-config 
 yum install -y libXt-devel libXmu-devel libXrender-devel expat-devel libAfterImage libAfterImage-devel libXi    
 yum install -y perl-DBD-MySQL
 rpm -i http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el6/en/x86_64/rpmforge/RPMS/perl-Math-MatrixReal-2.05-1.el6.rf.noarch.rpm 
 rpm -i http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el6/en/x86_64/rpmforge/RPMS/perl-Math-VectorReal-1.02-1.2.el6.rf.x86_64.rpm 
 
-#install 
-ln -s /usr/bin/cmake3 /usr/local/bin/cmake
+#install framework, refer to https://www.jlab.org/12gev_phys/packages/sources/ceInstall/2.2_install.html
 tcsh
 mkdir /jlab_root
 setenv JLAB_ROOT /jlab_root
-cd $JLAB_ROOT
 setenv JLAB_VERSION 2.2
+cd $JLAB_ROOT
 wget http://www.jlab.org/12gev_phys/packages/sources/ceInstall/ceInstall_$JLAB_VERSION.tar.gz
 tar -zxpvf ceInstall_$JLAB_VERSION.tar.gz
 mv ceInstall-$JLAB_VERSION $JLAB_VERSION
-cd $JLAB_VERSION/install
+source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh
+cd $JLAB_ROOT/$JLAB_VERSION/install
 mkdir -p $QTDIR
 ln -sfn /usr/include/qt5 $QTDIR/include
 ln -sfn /usr/lib64 $QTDIR/lib 
+ ./go_geant4
+ ./go_sconsscript
+ ./go_evio
+ ./go_mysql
+ ./go_ccdb
+ ./go_mlibrary
+ ./go_gemc
+ #./go_fields
+ ./go_root
+ ./go_banks
+ ./go_jana
 
-install pythia6 manually by following https://jlabsvn.jlab.org/svnroot/eic/evgen/pythiaeRHIC/1.0.0/readme_jlab
 Then push to docker cloud at https://store.docker.com/community/images/eictool/evgen_pythia6
+
+#run
+setenv JLAB_ROOT /jlab_root
+setenv JLAB_VERSION 2.2
+source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh
