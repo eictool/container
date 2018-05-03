@@ -1,6 +1,9 @@
 == build condition =======================================================================================
-based on eictool/base:1.0
-refer to https://github.com/eictool/container/blob/master/Dockerfile_base_1.0
+FROM centos:7.2.1511
+
+yum install -y tcsh epel-release 
+yum install -y gcc-c++ gcc-gfortran scons cmake make autoconf automake yumex wget bzip2 man-db subversion git file fluxbox xterm 
+yum install -y tigervnc tigervnc-server 
 
 #for root, refer to https://root.cern.ch/build-prerequisites#fedora
 yum install -y git cmake gcc-c++ gcc binutils libX11-devel libXpm-devel libXft-devel libXext-devel
