@@ -1,0 +1,57 @@
+== log =======================================================================================
+
+== how to use  =======================================================================================
+cd your_work_dir
+
+..... load container............................................
+load container with docker by
+sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ${PWD}:$PWD --ipc=host eictool/evgen_milou
+
+load container with x11docker by
+x11docker --desktop --sharedir $PWD eictool/evgen_milou fluxbox 
+right click on the fluxbox desktop and open xterm 
+
+get latest singularity
+load container with singularity by
+sudo singularity pull docker://eictool/evgen_milou
+mv evgen_milou.simg eictool_evgen_milou-latest_s2.5.1_20180510.simg  (change to your singularity version and pull date for record)
+singularity shell --bind ${PWD}:${PWD} eictool_evgen_milou-latest_s2.5.1_20180510.simg
+
+.....run it inside container .............................
+cd your_work_dir
+(download and compile, do it once)
+wget http://webhome.phy.duke.edu/~zz81/package/milou_20180510.tgz
+tar zxf milou_20180510.tgz
+cd milou
+make dvcs 
+(run the following everytime you want to generate new files)
+cp dvcs.steer_meic dvcs.steer_mine
+vi dvcs.steer_mine
+rm dvcs.steer
+ln -s dvcs.steer_mine dvcs.steer
+./milou
+(run the following when you want analysis result with root)
+setenv evgen /evgen	
+setenv rootVERSION v5.34.36
+source $evgen/root_$rootVERSION/bin/thisroot.csh
+h2root milou.ntp
+root plot.C (as an example analysing milou.root)
+
+== how to build============================================================================================
+...... build condition ...........................................................
+based on centos:6.9
+install some needed packages 
+install milou manually by following https://jlabsvn.jlab.org/svnroot/eic/evgen/milou/readme_jlab
+Then push to docker cloud at https://store.docker.com/community/images/eictool/evgen_milou
+
+...... build steps .................................................................
+sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ${PWD}:$PWD --ipc=host centos:6.9
+yum install -y tcsh epel-release 
+yum install -y gcc-c++ gcc-gfortran scons cmake make autoconf automake yumex wget bzip2 man-db subversion git file fluxbox xterm 
+yum install -y tigervnc tigervnc-server
+
+yum install -y git cmake gcc-c++ gcc binutils libX11-devel libXpm-devel libXft-devel libXext-devel
+yum install -y gcc-gfortran openssl-devel pcre-devel mesa-libGL-devel mesa-libGLU-devel glew-devel ftgl-devel mysql-devel fftw-devel cfitsio-devel graphviz-devel avahi-compat-libdns_sd-devel libldap-dev python-devel libxml2-devel gsl-static
+
+install milou manually by following https://jlabsvn.jlab.org/svnroot/eic/evgen/milou/readme_jlab
+
