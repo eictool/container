@@ -1,14 +1,10 @@
 == log =======================================================================================
 2018/04/13 at SVN r529 pythiaeRHIC, by Zhiwen Zhao
 
-== build condition =======================================================================================
-based on eictool/base:1.0
-install pythia6 manually by following https://jlabsvn.jlab.org/svnroot/eic/evgen/pythiaeRHIC/1.0.0/readme_jlab
-Then push to docker cloud at https://store.docker.com/community/images/eictool/evgen_pythia6
-
-== how to use, step by step guide  =======================================================================================
+== how to use  =======================================================================================
 cd your_work_dir
 
+..... load container............................................
 load container with docker by
 sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ${PWD}:$PWD --ipc=host eictool/evgen_pythia6
 
@@ -24,19 +20,24 @@ singularity shell --bind ${PWD}:${PWD} eictool_evgen_pythia6-latest_s2.4.6_20180
 
 .....run it inside container .............................
 tcsh
-setenv eic_evgen /evgen
+setenv evgen /evgen
 setenv rootVERSION v5.34.36
 setenv eicsmearVERSION 1.0.3
 source $evgen/root_$rootVERSION/bin/thisroot.csh
 setenv LD_LIBRARY_PATH $evgen/pythia6:$evgen/eic-smear-$eicsmearVERSION/build:${LD_LIBRARY_PATH}
 cd your_work_dir
-cp $eic_evgen/pythiaeRHIC/1.0.0/input_JLEIC ./
-$eic_evgen/pythiaeRHIC/1.0.0/build/pythiaeRHIC < input_JLEIC > pythia.log
-cp $eic_evgen/pythiaeRHIC/1.0.0/lund2root.C ./
+cp $evgen/pythiaeRHIC/1.0.0/input_JLEIC ./
+$evgen/pythiaeRHIC/1.0.0/build/pythiaeRHIC < input_JLEIC > pythia.log
+cp $evgen/pythiaeRHIC/1.0.0/lund2root.C ./
 root 'lund2root.C+("pythia.lund",100)'
-....................................................................
 
-== how to build, step by step guide =============================
+== how to build============================================================================================
+...... build condition ...........................................................
+based on eictool/base:1.0
+install pythia6 manually by following https://jlabsvn.jlab.org/svnroot/eic/evgen/pythiaeRHIC/1.0.0/readme_jlab
+Then push to docker cloud at https://store.docker.com/community/images/eictool/evgen_pythia6
+
+...... build steps ...........................................................
 [zwzhao@lily ~]$ sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ${PWD}:$PWD --ipc=host eictool/base:1.0
 [root@e759823744ad /]# tcsh
 [root@e759823744ad /]# yum install -y libX11-devel libXpm-devel libXft-devel libXext-devel mesa-libGL-devel glew-devel   (required package by root)
