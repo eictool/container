@@ -16,10 +16,11 @@ load container with x11docker by
 x11docker --desktop --sharedir $PWD eictool/evgen_pythia6 fluxbox 
 right click on the fluxbox desktop and open xterm 
 
+get latest singularity
 load container with singularity by
 sudo singularity pull docker://eictool/evgen_pythia6
-mv evgen_pythia6.simg eictool-evgen_pythia6-latest-s2.4.6_20180416.simg
-singularity shell --bind ${PWD}:${PWD} eictool-evgen_pythia6-latest-s2.4.6_20180416.simg
+mv evgen_pythia6.simg eictool_evgen_pythia6-latest_s2.4.6_20180416.simg  (change to your singularity version and pull date for record)
+singularity shell --bind ${PWD}:${PWD} eictool_evgen_pythia6-latest_s2.4.6_20180416.simg
 
 .....run it inside container .............................
 tcsh
