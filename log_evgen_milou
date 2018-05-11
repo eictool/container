@@ -18,6 +18,7 @@ mv evgen_milou.simg eictool_evgen_milou-latest_s2.5.1_20180510.simg  (change to 
 singularity shell --bind ${PWD}:${PWD} eictool_evgen_milou-latest_s2.5.1_20180510.simg
 
 .....run it inside container .............................
+tcsh
 cd your_work_dir
 (download and compile, do it once)
 wget http://webhome.phy.duke.edu/~zz81/package/milou_20180510.tgz
