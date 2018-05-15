@@ -1,15 +1,20 @@
 it's at https://store.docker.com/community/images/eictool/jlab_software_2.2
 
 == how to use it ========================================================================================
+#load container by docker 
 sudo docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ${PWD}:$PWD --ipc=host eictool/jlab_software_2.2
+
+#load container by singularity 
+singularity pull docker://eictool/jlab_software_2.2
+singularity shell /group/solid/apps/eictool_jlab_software_base_2.2-latest_s2.5.1_20180504.simg  (at jlab ifarm and farm)
+
+#run inside container
 tcsh
 source /jlab_root/setup
-
-/jlab_root/setup has lines as follows
-setenv JLAB_ROOT /jlab_root
-setenv JLAB_VERSION 2.2
-source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh
-
+    /jlab_root/setup has lines as follows
+    setenv JLAB_ROOT /jlab_root
+    setenv JLAB_VERSION 2.2
+    source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.csh
 test by run "gemc"
 
 == build condition =======================================================================================
